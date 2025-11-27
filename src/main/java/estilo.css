@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #ececec;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+form {
+    margin: 10px;
+}
+
+input, textarea, button {
+    padding: 5px;
+    margin-top: 5px;
+}
+
+/* ----------------- CARDS ----------------- */
+
+.card {
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px auto;
+    width: 300px;
+    text-align: left;
+}
+
+/* VERDE = curtir */
+.card-curtido {
+    background: #c6f7c5;
+}
+
+/* VERMELHO = não curtir */
+.card-nao-curtido {
+    background: #f8c7c7;
+}
+
+button {
+    margin-top: 5px;
+    padding: 6px 10px;
+}

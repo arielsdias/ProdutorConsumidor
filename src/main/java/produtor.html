@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Produtor</title>
+    <link rel="stylesheet" href="/estilo.css">
+</head>
+<body>
+
+<h1>Produtor</h1>
+<p>Cadastre uma nova atividade.</p>
+
+<form method="POST" action="/produtor">
+
+    <label>Nome:</label><br>
+    <input type="text" name="nome" required><br><br>
+
+    <label>Descrição:</label><br>
+    <textarea name="descricao" rows="3" cols="30" required></textarea><br><br>
+
+    <label>Data:</label><br>
+    <input type="date" name="data" required><br><br>
+
+    <button type="submit">Cadastrar</button>
+</form>
+
+<br>
+<a href="/">Voltar ao login</a>
+
+</body>
+</html>
