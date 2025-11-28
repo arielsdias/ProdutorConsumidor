@@ -35,6 +35,10 @@ public class Servidor {
         s.createContext("/consumidor", Servidor::consumidor); // lista cards
         s.createContext("/avaliar", Servidor::avaliar);       // curtir / não curtir
         s.createContext("/estilo.css", t -> enviarCSS(t, "estilo.css")); // CSS
+        s.createContext("/aluno.png", t -> enviarImagem(t, "aluno.png")); // IMAGEM
+        s.createContext("/professor.png", t -> enviarImagem(t, "professor.png")); // IMAGEM
+        s.createContext("/atividade.png", t -> enviarImagem(t, "atividade.png")); // IMAGEM
+
 
         s.start();
         System.out.println("Servidor rodando em http://localhost:8082/");
@@ -127,7 +131,7 @@ public class Servidor {
                 }
 
                 html.append("<div class=\"card").append(classeExtra).append("\">");
-
+                html.append("<img src=\"/atividade.png\" width=\"120\">");
                 html.append("<p><strong>ID:</strong> ").append(id).append("</p>");
                 html.append("<p><strong>Nome:</strong> ").append(nome).append("</p>");
                 html.append("<p><strong>Descrição:</strong> ").append(desc).append("</p>");
@@ -199,6 +203,19 @@ public class Servidor {
 
         redirecionar(t, "/consumidor");
     }
+
+    // -------------------- ENVIAR IMAGEM --------------------
+
+    private static void enviarImagem(HttpExchange t, String arquivo) throws IOException {
+        File f = new File("src/main/java/" + arquivo);
+
+        byte[] bytes = java.nio.file.Files.readAllBytes(f.toPath());
+        t.getResponseHeaders().add("Content-Type", "image/png");
+        t.sendResponseHeaders(200, bytes.length);
+        t.getResponseBody().write(bytes);
+        t.close();
+    }
+
 
     // -------------------- Funções auxiliares --------------------
 
