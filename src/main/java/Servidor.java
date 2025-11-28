@@ -102,7 +102,7 @@ public class Servidor {
         html.append("<!DOCTYPE html>");
         html.append("<html><head>");
         html.append("<meta charset=\"UTF-8\">");
-        html.append("<title>Consumidor</title>");
+        html.append("<title>Consumidor dos dados</title>");
         html.append("<link rel=\"stylesheet\" href=\"/estilo.css\">");
         html.append("</head><body>");
 
