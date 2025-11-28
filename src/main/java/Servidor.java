@@ -34,6 +34,7 @@ public class Servidor {
         s.createContext("/produtor", Servidor::produtor);     // cadastro
         s.createContext("/consumidor", Servidor::consumidor); // lista cards
         s.createContext("/avaliar", Servidor::avaliar);       // curtir / não curtir
+        s.createContext("/deletar", Servidor::deletar);       // deletar
         s.createContext("/estilo.css", t -> enviarCSS(t, "estilo.css")); // CSS
         s.createContext("/aluno.png", t -> enviarImagem(t, "aluno.png")); // IMAGEM
         s.createContext("/professor.png", t -> enviarImagem(t, "professor.png")); // IMAGEM
@@ -152,6 +153,13 @@ public class Servidor {
                 html.append("<button type=\"submit\">Não curtir</button>");
                 html.append("</form>");
 
+                // Botão DELETAR
+                html.append("<form method=\"POST\" action=\"/deletar\">");
+                html.append("<input type=\"hidden\" name=\"id\" value=\"").append(id).append("\">");
+                html.append("<input type=\"hidden\" name=\"acao\" value=\"nao\">");
+                html.append("<button type=\"submit\">Deletar</button>");
+                html.append("</form>");
+
                 html.append("</div>");
             }
 
@@ -194,6 +202,35 @@ public class Servidor {
                     "UPDATE dados SET curtida = ? WHERE id = ?")) {
                 ps.setString(1, acao);
                 ps.setInt(2, id);
+                ps.executeUpdate();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        redirecionar(t, "/consumidor");
+    }
+
+    // -------------------- DELETAR --------------------
+
+    private static void deletar(HttpExchange t) throws IOException {
+
+        if (!t.getRequestMethod().equalsIgnoreCase("POST")) {
+            redirecionar(t, "/consumidor");
+            return;
+        }
+
+        String corpo = URLDecoder.decode(ler(t), StandardCharsets.UTF_8);
+        String acao = pega(corpo, "acao"); // "curtir" ou "nao"
+        String idStr = pega(corpo, "id");
+
+        try {
+            int id = Integer.parseInt(idStr);
+
+            try (PreparedStatement ps = con.prepareStatement(
+                    "DELETE FROM dados WHERE id = ?")) {
+                ps.setInt(1, id);
                 ps.executeUpdate();
             }
 
